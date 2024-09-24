@@ -6,6 +6,9 @@ export default function(){
     const cardHolderInput = document.querySelector('.card__form--input_card_name');
     const cardNumberPreview = document.querySelector('.card__preview--number');
     const cardHolderPreview = document.querySelector('.card__preview--holder');
+    const expirationDatePreview = document.querySelector('.card__preview--expiration-date');
+    const cardMonthSelect = document.querySelector('#card__form--select_month');
+    const cardYearSelect = document.querySelector('#card__form--select_year');
 
     cardNumberInput.addEventListener('input', () => {
         if (cardNumberInput.value.length >= 19) {
@@ -46,4 +49,11 @@ export default function(){
         cardHolderPreview.textContent = cardHolderInput.value || defaultCardHolder;
     });
 
+    function updateExpirationDate() {
+        //show only last two year digits
+        expirationDatePreview.textContent = `${cardMonthSelect.value || 'MM'}/${ cardYearSelect.value ? cardYearSelect.value.slice(2) : 'YY'}`;
+    }
+
+    cardMonthSelect.addEventListener('change', updateExpirationDate);
+    cardYearSelect.addEventListener('change', updateExpirationDate);
 }
