@@ -1,15 +1,19 @@
 const defaultCardNumber = '#### #### #### ####';
-const defaultCardHolder = 'Jan Kowalski';
+const defaultCardHolder = 'JAN KOWALSKI';
 
 export default function(){
     const cardNumberInput = document.querySelector('.card__form--input_card_number');
     const cardHolderInput = document.querySelector('.card__form--input_card_name');
     const cardNumberPreview = document.querySelector('.card__preview--number');
-    const cardHolderPreview = document.querySelector('.card__preview--holder');
-    const expirationDatePreview = document.querySelector('.card__preview--expiration-date');
+    const cardHolderPreviewWrapper = document.querySelector('.card__preview--wrapper');
+    // const cardHolderPreview = document.querySelector('.card__holder--holder_value');
+    const cardHolderPreviewValue = document.querySelector('.card__holder--holder_value');
+    // const expirationDatePreviewLabel = document.querySelector('.card__preview--expiration');
+    const expirationDatePreviewValue = document.querySelector('.card__preview--expiration-date');
     const cardMonthSelect = document.querySelector('#card__form--select_month');
     const cardYearSelect = document.querySelector('#card__form--select_year');
     const cardCVVInput = document.querySelector('.card__form--input_cvv');
+    const form = document.querySelector('.card__form');
 
     //card number
 
@@ -51,14 +55,14 @@ export default function(){
     //card holder
 
     cardHolderInput.addEventListener('input', () => {
-        cardHolderPreview.textContent = cardHolderInput.value || defaultCardHolder;
+        cardHolderPreviewValue.textContent = cardHolderInput.value.toUpperCase() || defaultCardHolder;
     });
 
     //expiration date
 
     const updateExpirationDate = () => {
         //show only last two year digits
-        expirationDatePreview.textContent = `${cardMonthSelect.value || 'MM'}/${ cardYearSelect.value ? cardYearSelect.value.slice(2) : 'YY'}`;
+        expirationDatePreviewValue.textContent = `${cardMonthSelect.value || 'MM'}/${ cardYearSelect.value ? cardYearSelect.value.slice(2) : 'YY'}`;
     }
 
     cardMonthSelect.addEventListener('change', updateExpirationDate);
@@ -75,16 +79,14 @@ export default function(){
     cardCVVInput.addEventListener('focus', () => {
         //hide other previews on focus and show cvv preview
         cardNumberPreview.style.display = 'none';
-        cardHolderPreview.style.display = 'none';
-        expirationDatePreview.style.display = 'none';
+        cardHolderPreviewWrapper.style.display = 'none';
         cvvPreview.style.display = 'block';
     });
 
     cardCVVInput.addEventListener('blur', () => {
         //show other previews and hide cvv preview
         cardNumberPreview.style.display = 'block';
-        cardHolderPreview.style.display = 'block';
-        expirationDatePreview.style.display = 'block';
+        cardHolderPreviewWrapper.style.display = 'flex';
         cvvPreview.style.display = 'none';
     });
 
@@ -96,4 +98,7 @@ export default function(){
         const cvvValue = cardCVVInput.value || '###'; // Default value if empty
         cvvPreview.textContent = `CVV: ${cvvValue}`;
     });
+
+    form.addEventListener('submit', (e) => e.preventDefault()
+    )
 }
