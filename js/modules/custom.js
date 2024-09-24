@@ -9,6 +9,9 @@ export default function(){
     const expirationDatePreview = document.querySelector('.card__preview--expiration-date');
     const cardMonthSelect = document.querySelector('#card__form--select_month');
     const cardYearSelect = document.querySelector('#card__form--select_year');
+    const cardCVVInput = document.querySelector('.card__form--input_cvv');
+
+    //card number
 
     cardNumberInput.addEventListener('input', () => {
         if (cardNumberInput.value.length >= 19) {
@@ -16,13 +19,13 @@ export default function(){
         }
 
         //add space every four characters
-        const  formatCardNumber = number => {
+        const formatCardNumber = number => {
             const cleaned = number.replace(/\s+/g, '');
             const matched = cleaned.match(/.{1,4}/g);   
             return matched ? matched.join(' ') : '';  
         }
 
-        cardNumberInput.addEventListener('input', function() {
+        cardNumberInput.addEventListener('input', () => {
             const inputVal = cardNumberInput.value.replace(/\s/g, ''); // Remove spaces from the input
             const formattedInput = formatCardNumber(inputVal);         // Format input with spaces
             cardNumberInput.value = formattedInput;                    // Update the input field with the formatted value
@@ -45,15 +48,52 @@ export default function(){
         
     });
 
+    //card holder
+
     cardHolderInput.addEventListener('input', () => {
         cardHolderPreview.textContent = cardHolderInput.value || defaultCardHolder;
     });
 
-    function updateExpirationDate() {
+    //expiration date
+
+    const updateExpirationDate = () => {
         //show only last two year digits
         expirationDatePreview.textContent = `${cardMonthSelect.value || 'MM'}/${ cardYearSelect.value ? cardYearSelect.value.slice(2) : 'YY'}`;
     }
 
     cardMonthSelect.addEventListener('change', updateExpirationDate);
     cardYearSelect.addEventListener('change', updateExpirationDate);
+
+    //cvv
+
+    const cvvPreview = document.createElement('p');
+    cvvPreview.classList.add('card__preview--cvv');
+    cvvPreview.textContent = 'CVV: ###';
+    cvvPreview.style.display = 'none';
+    document.querySelector('.card__preview').appendChild(cvvPreview);
+
+    cardCVVInput.addEventListener('focus', () => {
+        //hide other previews on focus and show cvv preview
+        cardNumberPreview.style.display = 'none';
+        cardHolderPreview.style.display = 'none';
+        expirationDatePreview.style.display = 'none';
+        cvvPreview.style.display = 'block';
+    });
+
+    cardCVVInput.addEventListener('blur', () => {
+        //show other previews and hide cvv preview
+        cardNumberPreview.style.display = 'block';
+        cardHolderPreview.style.display = 'block';
+        expirationDatePreview.style.display = 'block';
+        cvvPreview.style.display = 'none';
+    });
+
+    cardCVVInput.addEventListener('input', () => {
+        if (cardCVVInput.value.length >= 3) {
+            cardCVVInput.value = cardCVVInput.value.substring(0, 3);
+        }
+
+        const cvvValue = cardCVVInput.value || '###'; // Default value if empty
+        cvvPreview.textContent = `CVV: ${cvvValue}`;
+    });
 }
