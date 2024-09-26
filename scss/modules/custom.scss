@@ -1,97 +1,121 @@
-$primary-color: #007bff; // Blue color for the button
-$input-border-color: #ccc; // Light gray for input borders
-$input-focus-border-color: $primary-color; // Blue for focus state
+$primary-color: #007bff;
+$border-color: #ccc;
+$input-focus-border-color: $primary-color;
+$border-radius-4: 4px;
 
 .container {
-    width: 100%;
     max-width: 400px;
-    margin: 100px auto; // Center the container
-    padding: 20px; // Add some padding around the container
-    border: 1px solid $input-border-color; // Border around the form
-    border-radius: 8px; // Rounded corners
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Subtle shadow effect
-    background-color: #ffffff; // White background
+    margin: 100px auto;
+    padding: 20px;
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
 }
 
-.card__preview {
+.background_image {
+    position: relative;
+    top: -100px;
+    height: 200px;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 25px;
+    background-color: $primary-color;
+}
+
+.card_preview {
     z-index: 1;
     position: relative;  
     top: -250px;
     height: 0;
-    margin: 0 auto; 
-    color: #fff;
     width: 100%;
     max-width: 400px;
+    margin: 0 auto;
+    color: #fff;
     font-family: monospace;
+
+    &--number {
+        margin-left: 20px;
+        font-size: 28px;
+
+        @media (max-width: 400px) {
+            font-size: 24px;
+        }
+    }
+
+    &--wrapper {
+        margin-top: 40px;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &--expiration {
+        text-align: center;
+    }
 }
 
-.card__preview--number {
-    margin-left: 20px;
-    font-size: 28px;
-}
-
-.card__preview--wrapper {
-    margin-top: 40px;
-    padding: 0 20px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.card__preview--expiration {
-    text-align: center;
-}
-
-.card__form {
+.card_form {
     margin-top: -90px;
     display: flex;
     flex-direction: column;
 
-    input, wrapper > input, select {
+    input, select {
         padding: 10px;
         margin-bottom: 10px;
-        border: 1px solid $input-border-color;
-        border-radius: 4px;
+        border: 1px solid $border-color;
+        border-radius: $border-radius-4;
 
-        :focus {
-            border: 1px solid red;
+        &:focus {
+            border-color: $primary-color;
         }
-    }
-
-    wrapper > input {
-        width: 30%;
     }
 }
 
-.wrapper {
+.details_wrapper {
     display: flex;
     justify-content: space-between;
 }
 
-.select-wrapper, .cvv-wrapper {
+.select_wrapper, .cvv_wrapper {
     display: flex;
     flex-direction: column;
 }
 
-.select-wrapper > div {
-    display: flex;
-    gap: 10px;
+.select_wrapper {
+    width: 60%;
 
-    select {
-        width: 50%;
+    .select_container {
+        display: flex;
+        gap: 10px;
+
+        select {
+            width: 50%;
+        }
     }
 }
-.card__form--submit {
+
+.cvv_wrapper {
+    width: 30%;
+}
+
+.card_preview--cvv {
+    display: none;
+    position: absolute;
+    bottom: -140px;
+    right: 20px;
+    border-radius: $border-radius-4;
+    color: #fff;
+    display: none;
+    z-index: 2;
+}
+
+.card_form--submit {
     margin: 10px 0;
     padding: 10px;
     background-color: $primary-color;
-    color: #ffffff;
+    color: #fff;
     border: none;
-    border-radius: 4px;
-    font-size: 16px;
+    border-radius: $border-radius-4;
     cursor: pointer;
-    transition: background-color 0.3s;
-
-    :hover {
-        background-color: darken($primary-color, 10%); // Darken color on hover
-    }
 }
